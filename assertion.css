@@ -3,5 +3,6 @@
 }
 
 .fail {
-  background-color: lightcoral;
+  background-color: rgb(228, 59, 59);
+  color: white;
 }
