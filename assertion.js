@@ -1,32 +1,65 @@
-var assertion = function( condition, errorMessage ) {
-    var testResults = getTestResults();
-    if( !condition ) {
-        var p = document.createElement( 'p' );
-        p.innerHTML = errorMessage;
-        document.body.appendChild( p );
-        testResults.errors++;
+class Result {
+    constructor( expression, message, result ) {
+        this.expression = expression
+        this.message = message
+        this.result = result
     }
-    testResults.tests++;
 }
 
-var assertEquals = function( expected, found ) {
-    assertion( expected == found, "Expected: " + expected + " Found: " + found );
-}
-
-var printTestResults = function() {
-    var testResults = getTestResults();
-    var p = document.createElement( 'p' );
-    p.innerHTML = 'Tests performed: ' + testResults.tests + '<br>'
-        + 'Errors: ' + testResults.errors;
-    document.body.appendChild( p );
-}
-
-var getTestResults = function() {
-    if( !document.testResults ) {
-        document.testResults = {
-            tests: 0,
-            errors: 0
-        }
+class Results {
+    results = []
+    add( result ) {
+        this.results.push( result )
     }
-    return document.testResults;
 }
+
+function getResults() {
+    if( !document.results ) {
+        document.results = new Results()
+    }
+    return document.results
+}
+
+function assert( expression, message ) {
+
+    let evalResult = eval( expression )
+    getResults().add( new Result( expression, message, evalResult ) )
+    
+}
+
+function printResults( targetEl ) {
+
+    targetEl = targetEl ? targetEl : document.body
+
+    let table = document.createElement( 'table'  )
+    table.setAttribute( 'border', '1' )
+    targetEl.appendChild( table )
+
+    let tr = document.createElement( 'tr' )
+    table.appendChild( tr )
+    let td = document.createElement( 'th' )
+    td.innerHTML = 'Result'
+    tr.appendChild( td )
+    td = document.createElement( 'th' )
+    td.innerHTML = 'Expression'
+    tr.appendChild( td )
+    td = document.createElement( 'th' )
+    td.innerHTML = 'Message'
+    tr.appendChild( td )
+
+    getResults().results.forEach( result => {
+        let tr = document.createElement( 'tr' )
+        tr.setAttribute( 'class', result.result ? 'success' : 'fail' )
+        table.appendChild( tr )
+        let td = document.createElement( 'td' )
+        td.innerHTML = result.result ? 'OK' : 'Failure'
+        tr.appendChild( td )
+        td = document.createElement( 'td' )
+        td.innerHTML = result.expression ? result.expression : '-'
+        tr.appendChild( td )
+        td = document.createElement( 'td' )
+        td.innerHTML = result.message ? result.message : '-'
+        tr.appendChild( td )
+    })
+
+} 

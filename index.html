@@ -2,11 +2,14 @@
   <head>
     <title>assertion</title>
     <script src="assertion.js"></script>
+    <link rel="stylesheet" href="assertion.css">
   </head>
   <body>
     <script>
-      assertEquals( "World", "Hello World".slice( 6 ) )
-      printTestResults()
+      assert( '"World" == "Hello World".slice( 6 )', 'slice works just fine' )
+      assert( 'Math.random() < 1', 'Random never 1.0' )
+      assert( '"Hello" == "hello"', 'A test which never fails is not a good test.' )
+      printResults()
     </script>
   </body>
 </html>
