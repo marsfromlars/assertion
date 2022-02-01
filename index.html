@@ -7,11 +7,19 @@
   <body>
     <script>
       assert( '"World" == "Hello World".slice( 6 )', 'slice works just fine' )
-      assert( 'Math.random() < 1', 'Random never 1.0' )
-      assert( '"Hello" == "hello"', 'A test which never fails is not a good test.' )
-      assert( 'null.length()', 'This is what an error (exception) looks like.' )
+      assertTrue( 'Math.random() < 1', 'Random never 1.0' )
+      assertTrue( '"Hello" == "hello"', 'A test which never fails is not a good test. (THIS SHOULD FAIL)' )
+      assertTrue( 'null.length()', 'This is what an error (exception) looks like. (THIS SHOULD THROW AN ERROR)' )
       assertEquals( 3, '[1,2,3].length', 'Assert equals' )
       assertEquals( 9, 3*3, 'Assert equals: if you do not pass strings, the Expression column is not showing much useful information.' )
+      assertFalse( '5 == 4' )
+      assertFalse( '2 == 2', 'Assert false fails if true :) (THIS SHOULD FAIL)' )
+      assertNotEquals( 2, 3 )
+      assertNotEquals( 4, '2+2', 'THIS SHOULD FAIL' )
+      assertError( 'null.length' )
+      assertError( '[1,2].length', 'THIS SHOULD FAIL' )
+      assertNoError( '[1,2].length' )
+      assertNoError( 'null.length', 'THIS SHOULD FAIL' )
       printResults()
     </script>
   </body>
