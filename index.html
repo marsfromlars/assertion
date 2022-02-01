@@ -9,6 +9,9 @@
       assert( '"World" == "Hello World".slice( 6 )', 'slice works just fine' )
       assert( 'Math.random() < 1', 'Random never 1.0' )
       assert( '"Hello" == "hello"', 'A test which never fails is not a good test.' )
+      assert( 'null.length()', 'This is what an error (exception) looks like.' )
+      assertEquals( 3, '[1,2,3].length', 'Assert equals' )
+      assertEquals( 9, 3*3, 'Assert equals: if you do not pass strings, the Expression column is not showing much useful information.' )
       printResults()
     </script>
   </body>

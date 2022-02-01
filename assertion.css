@@ -1,8 +1,11 @@
-.success {
+.OK {
   background-color: lightgreen;
 }
 
-.fail {
-  background-color: rgb(228, 59, 59);
-  color: white;
+.Failed {
+  background-color: rgba(228, 59, 59, 0.397);
+}
+
+.Error {
+  background-color: rgba(255, 94, 236, 0.468);
 }

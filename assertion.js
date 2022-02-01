@@ -1,8 +1,9 @@
 class Result {
-    constructor( expression, message, result ) {
+    constructor( expression, message, result, details ) {
         this.expression = expression
         this.message = message
         this.result = result
+        this.details = details
     }
 }
 
@@ -22,8 +23,32 @@ function getResults() {
 
 function assert( expression, message ) {
 
-    let evalResult = eval( expression )
-    getResults().add( new Result( expression, message, evalResult ) )
+    assertEquals( 'true', expression, message )
+
+}
+
+function assertEquals( expected, actual, message ) {
+
+    let expression = actual + ' == ' + expected
+    let result = 'OK'
+
+    try {
+
+        let expectedResult = eval( expected )
+        let actualResult = eval( actual )
+        let details = ''
+        if( actualResult != expectedResult ) {
+            details = 'Expected: ' + expectedResult + ' but was ' + actualResult
+            result = 'Failed'
+        }
+        getResults().add( new Result( expression, message, result ) )
+    
+    }
+    catch( ex ) {
+
+        getResults().add( new Result( expression, message, 'Error', '' + ex ) )
+
+    }
     
 }
 
@@ -46,19 +71,25 @@ function printResults( targetEl ) {
     td = document.createElement( 'th' )
     td.innerHTML = 'Message'
     tr.appendChild( td )
+    td = document.createElement( 'th' )
+    td.innerHTML = 'Details'
+    tr.appendChild( td )
 
     getResults().results.forEach( result => {
         let tr = document.createElement( 'tr' )
-        tr.setAttribute( 'class', result.result ? 'success' : 'fail' )
+        tr.setAttribute( 'class', result.result )
         table.appendChild( tr )
         let td = document.createElement( 'td' )
-        td.innerHTML = result.result ? 'OK' : 'Failure'
+        td.innerHTML = result.result
         tr.appendChild( td )
         td = document.createElement( 'td' )
         td.innerHTML = result.expression ? result.expression : '-'
         tr.appendChild( td )
         td = document.createElement( 'td' )
         td.innerHTML = result.message ? result.message : '-'
+        tr.appendChild( td )
+        td = document.createElement( 'td' )
+        td.innerHTML = result.details ? result.details : '-'
         tr.appendChild( td )
     })
 
